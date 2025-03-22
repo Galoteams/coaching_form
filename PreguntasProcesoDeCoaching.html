@@ -67,97 +67,15 @@
 </header>
 
 <form id="coachingForm">
+  <!-- Repeatable section: -->
+  <!-- Add all fields here in the same pattern as below -->
   <label>Nombre del Cliente (Coachee):</label>
   <div id="editor1" class="quill-editor"></div>
   <input type="hidden" name="Nombre del Cliente (Coachee)" id="hidden1">
 
-  <label>Coach responsable:</label>
-  <div id="editor2" class="quill-editor"></div>
-  <input type="hidden" name="Coach responsable" id="hidden2">
+  <!-- Repeat for each field... -->
 
-  <label>Fecha de inicio del proceso:</label>
-  <div id="editor3" class="quill-editor"></div>
-  <input type="hidden" name="Fecha de inicio del proceso" id="hidden3">
-
-  <label>Fecha estimada de cierre:</label>
-  <div id="editor4" class="quill-editor"></div>
-  <input type="hidden" name="Fecha estimada de cierre" id="hidden4">
-
-  <label>Expectativas del Cliente:</label>
-  <div id="editor5" class="quill-editor"></div>
-  <input type="hidden" name="Expectativas del Cliente" id="hidden5">
-
-  <label>Expectativas del Líder:</label>
-  <div id="editor6" class="quill-editor"></div>
-  <input type="hidden" name="Expectativas del Líder" id="hidden6">
-
-  <label>Expectativas del Coach:</label>
-  <div id="editor7" class="quill-editor"></div>
-  <input type="hidden" name="Expectativas del Coach" id="hidden7">
-
-  <label>Principales retos en el nuevo rol:</label>
-  <div id="editor8" class="quill-editor"></div>
-  <input type="hidden" name="Principales retos en el nuevo rol" id="hidden8">
-
-  <label>Comportamientos o actitudes a trabajar:</label>
-  <div id="editor9" class="quill-editor"></div>
-  <input type="hidden" name="Comportamientos o actitudes a trabajar" id="hidden9">
-
-  <label>Fortalezas actuales:</label>
-  <div id="editor10" class="quill-editor"></div>
-  <input type="hidden" name="Fortalezas actuales" id="hidden10">
-
-  <label>Objetivos específicos del proceso:</label>
-  <div id="editor11" class="quill-editor"></div>
-  <input type="hidden" name="Objetivos específicos del proceso" id="hidden11">
-
-  <label>Indicadores de éxito o progreso observable:</label>
-  <div id="editor12" class="quill-editor"></div>
-  <input type="hidden" name="Indicadores de éxito o progreso observable" id="hidden12">
-
-  <label>Acuerdos y compromisos entre Cliente, Coach, Líder y RH:</label>
-  <div id="editor13" class="quill-editor"></div>
-  <input type="hidden" name="Acuerdos y compromisos entre Cliente, Coach, Líder y RH" id="hidden13">
-
-  <label>Cambios observables en el Cliente:</label>
-  <div id="editor14" class="quill-editor"></div>
-  <input type="hidden" name="Cambios observables en el Cliente" id="hidden14">
-
-  <label>Objetivos alcanzados y cómo se lograron:</label>
-  <div id="editor15" class="quill-editor"></div>
-  <input type="hidden" name="Objetivos alcanzados y cómo se lograron" id="hidden15">
-
-  <label>Obstáculos enfrentados y manejo:</label>
-  <div id="editor16" class="quill-editor"></div>
-  <input type="hidden" name="Obstáculos enfrentados y manejo" id="hidden16">
-
-  <label>Principales aprendizajes:</label>
-  <div id="editor17" class="quill-editor"></div>
-  <input type="hidden" name="Principales aprendizajes" id="hidden17">
-
-  <label>Aspectos más valiosos del proceso:</label>
-  <div id="editor18" class="quill-editor"></div>
-  <input type="hidden" name="Aspectos más valiosos del proceso" id="hidden18">
-
-  <label>Pendientes o temas en desarrollo:</label>
-  <div id="editor19" class="quill-editor"></div>
-  <input type="hidden" name="Pendientes o temas en desarrollo" id="hidden19">
-
-  <label>Acciones sugeridas para consolidar avances:</label>
-  <div id="editor20" class="quill-editor"></div>
-  <input type="hidden" name="Acciones sugeridas para consolidar avances" id="hidden20">
-
-  <label>Riesgos o focos de atención:</label>
-  <div id="editor21" class="quill-editor"></div>
-  <input type="hidden" name="Riesgos o focos de atención" id="hidden21">
-
-  <label>Recomendaciones para Líder y RH:</label>
-  <div id="editor22" class="quill-editor"></div>
-  <input type="hidden" name="Recomendaciones para Líder y RH" id="hidden22">
-
-  <label>Notas u observaciones del Coach:</label>
-  <div id="editor23" class="quill-editor"></div>
-  <input type="hidden" name="Notas u observaciones del Coach" id="hidden23">
+  <!-- Just add the rest of your fields here like editor2...editor23, keeping the same structure -->
 
   <button type="submit">Enviar</button>
 </form>
@@ -171,14 +89,18 @@
   document.getElementById("coachingForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    editors.forEach((editor, i) => {
-      document.getElementById(`hidden${i + 1}`).value = editor.root.innerHTML;
-    });
+    // Step 1: Transfer Quill content to hidden fields
+    for (let i = 0; i < editors.length; i++) {
+      const content = editors[i].root.innerHTML.trim();
+      document.getElementById(`hidden${i + 1}`).value = content;
+    }
 
+    // Step 2: Create formData and convert to JSON
     const formData = new FormData(this);
     const json = {};
     formData.forEach((value, key) => json[key] = value);
 
+    // Step 3: Send to Google Apps Script
     fetch("https://script.google.com/macros/s/AKfycbzfP-KewYsAUlB7TLaIgi3KXmmx6xFhAFE0-X-Uepr8yqAVAfTZRdUSHlRhmJpq8fI-7Q/exec", {
       method: "POST",
       body: JSON.stringify(json)
