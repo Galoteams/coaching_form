@@ -78,10 +78,11 @@
     .then(result => {
       alert("Formulario enviado con éxito.");
     })
-    .catch(error => {
-      alert("Error al enviar el formulario.");
-      console.error(error);
-    });
+   .catch(error => {
+  alert("Error al enviar el formulario.");
+  console.log("Payload sent:", json);
+  console.error("Error occurred:", error);
+});
   });
 </script>
 
