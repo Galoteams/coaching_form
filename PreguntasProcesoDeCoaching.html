@@ -1,148 +1,22 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Formulario de Coaching</title>
-  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f6f8;
-      padding: 40px;
-      color: #333;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
-      color: #2c3e50;
-    }
-    h2 {
-      color: #2c3e50;
-    }
-    form {
-      background: #fff;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    label {
-      display: block;
-      margin-top: 20px;
-      margin-bottom: 8px;
-      font-weight: bold;
-      color: #2c3e50;
-    }
-    .quill-editor {
-      height: 150px;
-      margin-bottom: 10px;
-    }
-    button {
-      background-color: #3498db;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 30px;
-      display: block;
-    }
-    button:hover {
-      background-color: #2980b9;
-    }
-  </style>
-</head>
-<body>
+function doPost(e) {
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
 
-<header>
-  <h1>GALO</h1>
-  <h2>Formulario de Entregables de Coaching</h2>
-</header>
+    // Read raw POST body (JSON)
+    const jsonString = e.postData.contents;
+    const data = JSON.parse(jsonString);
 
-<form id="coachingForm">
-  <!-- Repeatable section -->
-  <script>
-    const fieldLabels = [
-      "Nombre del Cliente (Coachee)", "Coach responsable", "Fecha de inicio del proceso", "Fecha estimada de cierre",
-      "Expectativas del Cliente", "Expectativas del Líder", "Expectativas del Coach", "Principales retos en el nuevo rol",
-      "Comportamientos o actitudes a trabajar", "Fortalezas actuales", "Objetivos específicos del proceso",
-      "Indicadores de éxito o progreso observable", "Acuerdos y compromisos entre Cliente, Coach, Líder y RH",
-      "Cambios observables en el Cliente", "Objetivos alcanzados y cómo se lograron",
-      "Obstáculos enfrentados y manejo", "Principales aprendizajes", "Aspectos más valiosos del proceso",
-      "Pendientes o temas en desarrollo", "Acciones sugeridas para consolidar avances", "Riesgos o focos de atención",
-      "Recomendaciones para Líder y RH", "Notas u observaciones del Coach"
-    ];
-  </script>
-  <div id="quillFields"></div>
-  <button type="submit">Enviar</button>
-</form>
+    // Log incoming data
+    Logger.log("Incoming payload: " + jsonString);
 
-<script>
-  const fieldContainer = document.getElementById("quillFields");
-  const editors = [];
+    const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    const row = headers.map(header => data[header] || "");
 
-  fieldLabels.forEach((label, index) => {
-    const editorId = `editor${index + 1}`;
-    const hiddenId = `hidden${index + 1}`;
+    sheet.appendRow(row);
 
-    const labelEl = document.createElement("label");
-    labelEl.textContent = label;
-    fieldContainer.appendChild(labelEl);
-
-    const editorDiv = document.createElement("div");
-    editorDiv.className = "quill-editor";
-    editorDiv.id = editorId;
-    fieldContainer.appendChild(editorDiv);
-
-    const hiddenInput = document.createElement("input");
-    hiddenInput.type = "hidden";
-    hiddenInput.name = label;
-    hiddenInput.id = hiddenId;
-    fieldContainer.appendChild(hiddenInput);
-
-    editors.push({ id: editorId, hidden: hiddenId });
-  });
-
-  const quillInstances = editors.map(({ id }) => new Quill(`#${id}`, { theme: 'snow' }));
-
-  document.getElementById("coachingForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    editors.forEach(({ hidden }, i) => {
-      document.getElementById(hidden).value = quillInstances[i].root.innerHTML.trim();
-    });
-
-    const formData = new FormData(this);
-    const json = {};
-    formData.forEach((value, key) => json[key] = value);
-
-    fetch("https://script.google.com/macros/s/AKfycbzfP-KewYsAUlB7TLaIgi3KXmmx6xFhAFE0-X-Uepr8yqAVAfTZRdUSHlRhmJpq8fI-7Q/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify(json)
-})
-    .then(response => response.text())
-    .then(result => {
-      console.log("Success response:", result);
-      console.log("Payload sent:", json);
-      alert("Formulario enviado con éxito.");
-    })
-    .catch(error => {
-      alert("Error al enviar el formulario.");
-      console.log("Payload sent:", json);
-      console.error("Error occurred:", error);
-    });
-  });
-</script>
-
-</body>
-</html>
+    return ContentService.createTextOutput("Success").setMimeType(ContentService.MimeType.TEXT);
+  } catch (error) {
+    Logger.log("ERROR: " + error.toString());
+    return ContentService.createTextOutput("Error").setMimeType(ContentService.MimeType.TEXT);
+  }
+}
