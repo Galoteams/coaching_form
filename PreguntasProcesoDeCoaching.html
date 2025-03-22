@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Formulario de Coaching</title>
+  <title>Formulario TEST</title>
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
   <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
   <style>
@@ -10,150 +10,61 @@
       font-family: 'Segoe UI', sans-serif;
       background: #f4f6f8;
       padding: 40px;
-      color: #333;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
-      color: #2c3e50;
-    }
-    h2 {
-      color: #2c3e50;
     }
     form {
+      max-width: 700px;
+      margin: auto;
       background: #fff;
-      max-width: 900px;
-      margin: 0 auto;
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    label {
-      display: block;
-      margin-top: 20px;
-      margin-bottom: 8px;
-      font-weight: bold;
-      color: #2c3e50;
+      border-radius: 10px;
     }
     .quill-editor {
       height: 150px;
       margin-bottom: 10px;
     }
-    button {
-      background-color: #3498db;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 30px;
+    label {
+      font-weight: bold;
       display: block;
+      margin-top: 20px;
     }
-    button:hover {
-      background-color: #2980b9;
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>GALO</h1>
-  <h2>Formulario de Entregables de Coaching</h2>
-</header>
+<h1 style="text-align:center;">GALO – Formulario Test</h1>
 
 <form id="coachingForm">
-  <!-- Fields -->
   <label>Nombre del Cliente (Coachee):</label>
   <div id="editor1" class="quill-editor"></div>
   <input type="hidden" name="Nombre del Cliente (Coachee)" id="hidden1">
+
   <label>Coach responsable:</label>
   <div id="editor2" class="quill-editor"></div>
   <input type="hidden" name="Coach responsable" id="hidden2">
-  <label>Fecha de inicio del proceso:</label>
-  <div id="editor3" class="quill-editor"></div>
-  <input type="hidden" name="Fecha de inicio del proceso" id="hidden3">
-  <label>Fecha estimada de cierre:</label>
-  <div id="editor4" class="quill-editor"></div>
-  <input type="hidden" name="Fecha estimada de cierre" id="hidden4">
-  <label>Expectativas del Cliente:</label>
-  <div id="editor5" class="quill-editor"></div>
-  <input type="hidden" name="Expectativas del Cliente" id="hidden5">
-  <label>Expectativas del Líder:</label>
-  <div id="editor6" class="quill-editor"></div>
-  <input type="hidden" name="Expectativas del Líder" id="hidden6">
-  <label>Expectativas del Coach:</label>
-  <div id="editor7" class="quill-editor"></div>
-  <input type="hidden" name="Expectativas del Coach" id="hidden7">
-  <label>Principales retos en el nuevo rol:</label>
-  <div id="editor8" class="quill-editor"></div>
-  <input type="hidden" name="Principales retos en el nuevo rol" id="hidden8">
-  <label>Comportamientos o actitudes a trabajar:</label>
-  <div id="editor9" class="quill-editor"></div>
-  <input type="hidden" name="Comportamientos o actitudes a trabajar" id="hidden9">
-  <label>Fortalezas actuales:</label>
-  <div id="editor10" class="quill-editor"></div>
-  <input type="hidden" name="Fortalezas actuales" id="hidden10">
-  <label>Objetivos específicos del proceso:</label>
-  <div id="editor11" class="quill-editor"></div>
-  <input type="hidden" name="Objetivos específicos del proceso" id="hidden11">
-  <label>Indicadores de éxito o progreso observable:</label>
-  <div id="editor12" class="quill-editor"></div>
-  <input type="hidden" name="Indicadores de éxito o progreso observable" id="hidden12">
-  <label>Acuerdos y compromisos entre Cliente, Coach, Líder y RH:</label>
-  <div id="editor13" class="quill-editor"></div>
-  <input type="hidden" name="Acuerdos y compromisos entre Cliente, Coach, Líder y RH" id="hidden13">
-  <label>Cambios observables en el Cliente:</label>
-  <div id="editor14" class="quill-editor"></div>
-  <input type="hidden" name="Cambios observables en el Cliente" id="hidden14">
-  <label>Objetivos alcanzados y cómo se lograron:</label>
-  <div id="editor15" class="quill-editor"></div>
-  <input type="hidden" name="Objetivos alcanzados y cómo se lograron" id="hidden15">
-  <label>Obstáculos enfrentados y manejo:</label>
-  <div id="editor16" class="quill-editor"></div>
-  <input type="hidden" name="Obstáculos enfrentados y manejo" id="hidden16">
-  <label>Principales aprendizajes:</label>
-  <div id="editor17" class="quill-editor"></div>
-  <input type="hidden" name="Principales aprendizajes" id="hidden17">
-  <label>Aspectos más valiosos del proceso:</label>
-  <div id="editor18" class="quill-editor"></div>
-  <input type="hidden" name="Aspectos más valiosos del proceso" id="hidden18">
-  <label>Pendientes o temas en desarrollo:</label>
-  <div id="editor19" class="quill-editor"></div>
-  <input type="hidden" name="Pendientes o temas en desarrollo" id="hidden19">
-  <label>Acciones sugeridas para consolidar avances:</label>
-  <div id="editor20" class="quill-editor"></div>
-  <input type="hidden" name="Acciones sugeridas para consolidar avances" id="hidden20">
-  <label>Riesgos o focos de atención:</label>
-  <div id="editor21" class="quill-editor"></div>
-  <input type="hidden" name="Riesgos o focos de atención" id="hidden21">
-  <label>Recomendaciones para Líder y RH:</label>
-  <div id="editor22" class="quill-editor"></div>
-  <input type="hidden" name="Recomendaciones para Líder y RH" id="hidden22">
-  <label>Notas u observaciones del Coach:</label>
-  <div id="editor23" class="quill-editor"></div>
-  <input type="hidden" name="Notas u observaciones del Coach" id="hidden23">
 
   <button type="submit">Enviar</button>
 </form>
 
 <script>
-  const editors = [];
-  for (let i = 1; i <= 23; i++) {
-    editors.push(new Quill(`#editor${i}`, { theme: 'snow' }));
-  }
+  const editors = [
+    new Quill('#editor1', { theme: 'snow' }),
+    new Quill('#editor2', { theme: 'snow' })
+  ];
 
   document.getElementById("coachingForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    for (let i = 0; i < editors.length; i++) {
-      const content = editors[i].root.innerHTML.trim();
-      document.getElementById(`hidden${i + 1}`).value = content;
-    }
+    // Copy Quill content into hidden inputs
+    document.getElementById("hidden1").value = editors[0].root.innerHTML.trim();
+    document.getElementById("hidden2").value = editors[1].root.innerHTML.trim();
 
     const formData = new FormData(this);
     const json = {};
@@ -166,7 +77,6 @@
     .then(response => response.text())
     .then(result => {
       alert("Formulario enviado con éxito.");
-      editors.forEach(editor => editor.setContents([]));
     })
     .catch(error => {
       alert("Error al enviar el formulario.");
