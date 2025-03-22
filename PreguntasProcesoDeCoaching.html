@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es"> The form appears correctly but the input data is not logged onto the google sheet
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Formulario de Coaching</title>
@@ -67,30 +67,28 @@
 </header>
 
 <form id="coachingForm">
-  <!-- Repeatable section -->
-  <script>
-    const fieldLabels = [
-      "Nombre del Cliente (Coachee)", "Coach responsable", "Fecha de inicio del proceso", "Fecha estimada de cierre",
-      "Expectativas del Cliente", "Expectativas del Líder", "Expectativas del Coach", "Principales retos en el nuevo rol",
-      "Comportamientos o actitudes a trabajar", "Fortalezas actuales", "Objetivos específicos del proceso",
-      "Indicadores de éxito o progreso observable", "Acuerdos y compromisos entre Cliente, Coach, Líder y RH",
-      "Cambios observables en el Cliente", "Objetivos alcanzados y cómo se lograron",
-      "Obstáculos enfrentados y manejo", "Principales aprendizajes", "Aspectos más valiosos del proceso",
-      "Pendientes o temas en desarrollo", "Acciones sugeridas para consolidar avances", "Riesgos o focos de atención",
-      "Recomendaciones para Líder y RH", "Notas u observaciones del Coach"
-    ];
-  </script>
   <div id="quillFields"></div>
   <button type="submit">Enviar</button>
 </form>
 
 <script>
+  const fieldLabels = [
+    "Nombre del Cliente (Coachee)", "Coach responsable", "Fecha de inicio del proceso", "Fecha estimada de cierre",
+    "Expectativas del Cliente", "Expectativas del Líder", "Expectativas del Coach", "Principales retos en el nuevo rol",
+    "Comportamientos o actitudes a trabajar", "Fortalezas actuales", "Objetivos específicos del proceso",
+    "Indicadores de éxito o progreso observable", "Acuerdos y compromisos entre Cliente, Coach, Líder y RH",
+    "Cambios observables en el Cliente", "Objetivos alcanzados y cómo se lograron",
+    "Obstáculos enfrentados y manejo", "Principales aprendizajes", "Aspectos más valiosos del proceso",
+    "Pendientes o temas en desarrollo", "Acciones sugeridas para consolidar avances", "Riesgos o focos de atención",
+    "Recomendaciones para Líder y RH", "Notas u observaciones del Coach"
+  ];
+
   const fieldContainer = document.getElementById("quillFields");
   const editors = [];
 
   fieldLabels.forEach((label, index) => {
-    const editorId = editor${index + 1};
-    const hiddenId = hidden${index + 1};
+    const editorId = `editor${index + 1}`;
+    const hiddenId = `hidden${index + 1}`;
 
     const labelEl = document.createElement("label");
     labelEl.textContent = label;
@@ -110,7 +108,7 @@
     editors.push({ id: editorId, hidden: hiddenId });
   });
 
-  const quillInstances = editors.map(({ id }) => new Quill(#${id}, { theme: 'snow' }));
+  const quillInstances = editors.map(({ id }) => new Quill(`#${id}`, { theme: 'snow' }));
 
   document.getElementById("coachingForm").addEventListener("submit", function(e) {
     e.preventDefault();
@@ -124,12 +122,12 @@
     formData.forEach((value, key) => json[key] = value);
 
     fetch("https://script.google.com/macros/s/AKfycbzfP-KewYsAUlB7TLaIgi3KXmmx6xFhAFE0-X-Uepr8yqAVAfTZRdUSHlRhmJpq8fI-7Q/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify(json)
-})
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(json)
+    })
     .then(response => response.text())
     .then(result => {
       console.log("Success response:", result);
