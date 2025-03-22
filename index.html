@@ -100,20 +100,18 @@
 
      fetch("https://script.google.com/macros/s/AKfycbzfP-KewYsAUlB7TLaIgi3KXmmx6xFhAFE0-X-Uepr8yqAVAfTZRdUSHlRhmJpq8fI-7Q/exec", {
       method: "POST",
+      mode: "no-cors", // ✅ VERY IMPORTANT
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(json)
     })
-    .then(response => response.text())
-    .then(result => {
-      console.log("Server response:", result);  // ✅ Log the raw server response
-      alert("Formulario enviado con éxito.");
+    .then(() => {
+      alert("Formulario enviado con éxito (no-cors mode, no response visible).");
     })
     .catch(error => {
-      console.log("FETCH ERROR:", error);       // ✅ Log actual error object
-      console.log("Payload sent:", json);       // ✅ Show what was sent
       alert("Error al enviar el formulario.");
+      console.error("Error:", error);
     });
   });
 </script>
